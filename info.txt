@@ -1,0 +1,51 @@
+Markdown
+# Role
+你是一位資深的 Python 全端工程師與 DevOps 專家。請協助我建立一個基於 Python Streamlit 的即時監控系統，並規劃部署至 Render 的流程。
+
+# Requirements
+1. 應用程式：使用 Python Streamlit 編寫，包含兩個區塊：
+   - 用戶輸入區：一個輸入框，將數字 POST 到 Supabase `sensor_data` 資料表。
+   - 管理儀表板：即時讀取資料表。若數值 >= 55，UI 必須顯示 "危險" 警示訊息。
+2. 數據庫：使用 Supabase，資料表結構為 id (serial), created_at (timestamp), value (int)。
+3. 部署目標：Render.com (Python Web Service)。
+
+# Tasks
+請產出以下項目的完整程式碼與設定檔案：
+1. app.py：包含完整的 Streamlit 邏輯、Supabase 連線與邏輯判斷。
+2. requirements.txt：列出所有必要的套件（streamlit, supabase, python-dotenv 等）。
+3. render.yaml：提供 Render 的 Blueprints 設定檔，以便自動化部署。
+4. Procfile：明確定義啟動指令 (web: streamlit run app.py --server.port $PORT --server.address 0.0.0.0)。
+
+# Constraints
+- 請確保環境變數（SUPABASE_URL, SUPABASE_KEY）在代碼中以安全性方式處理。
+- 程式碼需具備良好的錯誤處理，特別是針對資料庫讀寫失敗的情況。
+- 請提供部署後的環境變數設定指南。
+💡 執行流程與架構參考
+為了讓你更清楚 AI 產出後的結構，這裡提供該架構的邏輯圖與說明：
+
+部署至 Render 的關鍵細節說明：
+環境變數配置：
+在 Render 部署時，不要將 API Key 硬編碼在程式碼中。在 Render 的 Dashboard 中，進入 Environment 分頁，設定以下兩個 Key：
+
+SUPABASE_URL
+
+SUPABASE_KEY
+
+為什麼選擇 Render？
+
+Blueprints (render.yaml)：這讓你的基礎設施即程式碼 (IaC)，當你把專案推送到 GitHub 時，Render 會自動檢測並根據 render.yaml 的內容建立服務，無需手動設定參數。
+
+Port 管理：Streamlit 預設走 8501，但 Render 需要讀取系統分配的 $PORT 變數。在 Procfile 中明確指定 --server.port $PORT 至關重要。
+
+即時監控 (Real-time)：
+
+Streamlit 本身不是專門為了極高頻率的推播設計的。建議在 app.py 中使用 st.empty() 配合 time.sleep() 實現輕量級的自動刷新，或者使用 st.rerun() 達到視覺上的即時更新效果。
+
+下一步建議
+當 AI 為你產生上述程式碼後，你需要：
+
+在 GitHub 建立一個新的 Repository。
+
+將 AI 產出的 app.py、requirements.txt、render.yaml、Procfile 推送到該 Repo。
+
+連結 Render 帳戶至你的 GitHub 帳號並選擇該 Repo。

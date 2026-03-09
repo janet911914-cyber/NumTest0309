@@ -1,0 +1,58 @@
+🚀 Antigravity 執行提示詞 (Prompt)
+專案名稱： Supabase-Python-Alert-App
+技術需求： Python, Flask, Supabase-py, Render (Deployment)
+
+任務描述：
+請幫我建立一個 Flask 網頁應用程式，包含前端輸入與後端管理功能，並整合 Supabase 資料庫。
+
+功能細節：
+
+資料庫設定： 使用 supabase-py 連接。請預留 SUPABASE_URL 與 SUPABASE_KEY 的環境變數設定位置。資料表名稱為 sensor_data，包含欄位 value (整數) 與 created_at (時間戳)。
+
+用戶輸入頁面 (/)：
+
+一個簡單的 HTML 表單，讓使用者輸入一個數字。
+
+按下提交後，將數字存入 Supabase 的 sensor_data 資料表。
+
+提交成功後顯示提示訊息。
+
+管理後台頁面 (/admin)：
+
+即時顯示目前資料庫中最新的 10 筆資料。
+
+核心邏輯： 當最新一筆資料的數字 >= 55 時，頁面顯眼處需顯示紅色加粗文字：「🚨 危險：數值過高！」。
+
+請加入簡單的 JavaScript setInterval 每 5 秒自動重新整理頁面，以達成即時監控效果。
+
+部署準備 (Render)：
+
+產生 requirements.txt（包含 flask, supabase, gunicorn）。
+
+產生 render.yaml 或說明 start command 為 gunicorn app:app。
+
+確保程式碼能透過 os.environ.get 讀取環境變數。
+
+程式碼結構： 請提供 app.py, templates/index.html, templates/admin.html 以及 requirements.txt。
+
+🛠️ Render 部署標準作業程序 (SOP)
+當 AI 幫您產出程式碼並上傳至 GitHub 後，請按照以下步驟在 Render 部署：
+
+新建 Web Service： 在 Render Dashboard 點擊 New + -> Web Service 並連結您的 GitHub Repo。
+
+設定環境變數 (Environment Variables)：
+這是最關鍵的一步，進入 Render 的 Env Vars 選項卡，加入：
+
+SUPABASE_URL: (您的 Supabase 專案 URL)
+
+SUPABASE_KEY: (您的 Supabase Anon Key)
+
+PYTHON_VERSION: 3.9.0 (建議指定版本)
+
+設定啟動指令：
+
+Build Command: pip install -r requirements.txt
+
+Start Command: gunicorn app:app
+
+部署： 點擊 Deploy Web Service，等待進度條跑完即可獲得網址。
